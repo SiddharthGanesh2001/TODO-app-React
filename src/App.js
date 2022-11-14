@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from "react";
+function RenderData() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header/>
+      <br/><br/>
+      <AddTask/>
+      <br/><br/>
+      <TaskBox/>      
+      <TaskBoxStatus/>
     </div>
-  );
+  )
+}
+function Header() {
+  return (
+    <h1>
+      TODO
+    </h1>
+  )
+}
+function AddTask() {
+  return(
+    <div id="addTask">    
+        <input type="text" name="addTask" placeholder="Add a task" id="addTaskBox" autoComplete="off"/>
+        <input type="button" value="Add" id="add"/>    
+    </div>
+  )
 }
 
+function TaskBox() {
+  return (
+    <div id="taskBox">
+    </div>
+  )
+}
+
+function TaskBoxStatus() {
+  return (
+    <div id="taskBoxStatus">
+        <button id="clearCompleted">Clear Completed</button>
+    </div>
+  )
+}
+
+function App() {
+  
+  return <RenderData/>;
+}
 export default App;
