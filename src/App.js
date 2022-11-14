@@ -1,7 +1,13 @@
 import React from "react";
-function RenderData() {
+import Header from "./Header";
+import AddTask from "./AddTask";
+import TaskBox from "./TaskBox";
+import TaskBoxStatus from "./TaskBoxStatus";
+
+function App() {
+  
   return (
-    <div>
+    <div id="wrapper">
       <Header/>
       <br/><br/>
       <AddTask/>
@@ -11,39 +17,31 @@ function RenderData() {
     </div>
   )
 }
-function Header() {
-  return (
-    <h1>
-      TODO
-    </h1>
-  )
-}
-function AddTask() {
-  return(
-    <div id="addTask">    
-        <input type="text" name="addTask" placeholder="Add a task" id="addTaskBox" autoComplete="off"/>
-        <input type="button" value="Add" id="add"/>    
-    </div>
-  )
+
+class TaskModel {
+  constructor(name) {
+    this.name = name;
+    this.ID = Date.now();
+    this.status = "PENDING";
+  }
 }
 
-function TaskBox() {
-  return (
-    <div id="taskBox">
-    </div>
-  )
+class TaskCollection {
+  constructor() {
+    this.taskCollection = [];
+  }
+  add(name) {
+    this.taskCollection.push(new TaskModel(name));
+  }
+  remove(...IDs) {
+    for(let ID of IDs) {
+      for(let i = 0; i < this.taskCollection.length; i++) {
+        if(this.taskCollection[i].ID === ID) {
+          this.taskCollection.splice(i,1);
+        }
+      }
+    }
+  }
 }
 
-function TaskBoxStatus() {
-  return (
-    <div id="taskBoxStatus">
-        <button id="clearCompleted">Clear Completed</button>
-    </div>
-  )
-}
-
-function App() {
-  
-  return <RenderData/>;
-}
 export default App;
