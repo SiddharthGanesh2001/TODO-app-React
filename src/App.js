@@ -6,13 +6,18 @@ import TaskBoxStatus from "./TaskBoxStatus";
 
 function App() {
   
+  function handleTaskAdd(taskName) {
+    let task = TaskCollection.getInstance();
+    task.add(taskName);
+    console.log(task);
+  }
+
   return (
     <div id="wrapper">
       <Header/>
       <br/><br/>
-      <AddTask/>
-      <br/><br/>
-      <TaskBox/>      
+      <AddTask onSubmit={handleTaskAdd}/>
+      <br/><br/>  
       <TaskBoxStatus/>
     </div>
   )
@@ -26,22 +31,40 @@ class TaskModel {
   }
 }
 
-class TaskCollection {
+export class TaskCollection {
+  static instance = null;
   constructor() {
-    this.taskCollection = [];
+    this.store = [];
   }
+  static getInstance() {
+    if(this.instance === null) {
+      this.instance = new TaskCollection();      
+    }
+    return this.instance;
+  }
+
   add(name) {
-    this.taskCollection.push(new TaskModel(name));
+    this.store.push(new TaskModel(name));
   }
   remove(...IDs) {
     for(let ID of IDs) {
-      for(let i = 0; i < this.taskCollection.length; i++) {
-        if(this.taskCollection[i].ID === ID) {
-          this.taskCollection.splice(i,1);
+      for(let i = 0; i < this.store.length; i++) {
+        if(this.store[i].ID === ID) {
+          this.store.splice(i,1);
         }
       }
     }
   }
+  getTaskModel(taskModel) {
+    return this.store[taskModel];
+  }
+  // getID() {
+  //   for(let taskModel of this.getInstance) {
+  //     return taskModel.ID;
+  //   }
+  // }
 }
+
+
 
 export default App;
