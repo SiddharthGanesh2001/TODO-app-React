@@ -5,7 +5,6 @@ import TaskBox from "./TaskBox";
 import TaskBoxStatus from "./TaskBoxStatus";
 
 function App() {
-  
   function handleTaskAdd(taskName) {
     let task = TaskCollection.getInstance();
     task.add(taskName);
@@ -17,7 +16,7 @@ function App() {
       <Header/>
       <br/><br/>
       <AddTask onSubmit={handleTaskAdd}/>
-      <br/><br/>  
+      <br/><br/> 
       <TaskBoxStatus/>
     </div>
   )
