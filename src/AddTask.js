@@ -1,18 +1,20 @@
-import { TaskCollection } from "./App";
-import TaskBox from "./TaskBox";
+import { useState } from "react";
 export default function AddTask({ onSubmit }) {
-
+  const [taskName, setTaskName] = useState("");
+  
+  function handleChange(event) {
+    setTaskName(event.target.value);
+  }
   function handleEnter(event) {
-    let taskName = document.querySelector("#addTaskBox").value;
     if(event.code === 'Enter') {
       onSubmit(taskName);
-      TaskBox();
+      setTaskName("");
     }
   }
 
   return(
     <div id="addTask">    
-        <input type="text" name="addTask" placeholder="Add a task" id="addTaskBox" autoComplete="off" onKeyDown={handleEnter}/>
+        <input type="text" name="addTask" placeholder="Add a task" id="addTaskBox" autoComplete="off" value={taskName} onChange={handleChange} onKeyDown={handleEnter}/>
         <br/><br/>
     </div>
   )
