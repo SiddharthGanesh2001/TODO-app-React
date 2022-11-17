@@ -1,21 +1,27 @@
-export default function TaskBox(props) {
-  if(props.length>0){
-    console.log(props);
+export default function TaskBox({ todoList, onCheck, onRemove }) {
+  function handleCheck(event) {
+    onCheck(event.target.id);
+  }
+  function handleRemove(event) {
+    onRemove(event.target.id);
+  }
+
+  let tasks = todoList.map((item) => {
     return (
-      <div id="taskBox">
-        <ul>
-          <li id="{props.id}">
-            <input type="checkbox" name="{props.name}" id="{props.name}"/>
-            <label htmlFor="{props.name}">{props.name}</label>
-            <span className="removeButton">
-              <button id="{props.ID}">X</button>
-            </span><br/><br/>
-          </li>
-        </ul>
-      </div>
+      <li key={item.ID}>
+        <input type="checkbox" name={item.ID} id={item.ID} onClick={handleCheck} />
+        <label htmlFor={item.ID}>{item.name}</label>
+        <span className="removeButton">
+          <button id={item.ID} onClick={handleRemove}>X</button>
+        </span><br /><br />
+      </li>
     )
-  }
-  else {
-    return null;
-  }
+  });
+  return (
+    <div id="taskBox">
+      <ul>
+        {tasks}
+      </ul>
+    </div>
+  );
 }

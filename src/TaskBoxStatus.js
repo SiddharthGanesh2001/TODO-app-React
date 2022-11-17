@@ -1,7 +1,10 @@
-export default function TaskBoxStatus() {
-    return (
-      <div id="taskBoxStatus">
-          <button id="clearCompleted">Clear Completed</button>
-      </div>
-    )
+export default function TaskBoxStatus({ onClearCompleted }) {
+  function handleClearCompleted(event) {
+    onClearCompleted();
+  }
+  return (
+    <div id="taskBoxStatus">
+      <button id="clearCompleted" onClick={handleClearCompleted}>Clear Completed</button>
+    </div>
+  )
 }

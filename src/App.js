@@ -3,12 +3,28 @@ import Header from "./Header";
 import AddTask from "./AddTask";
 import TaskBox from "./TaskBox";
 import TaskBoxStatus from "./TaskBoxStatus";
+import TaskCollection from "./TaskCollection";
+import { useState } from "react";
+
 
 function App() {
+  let collection = TaskCollection.getInstance();
+  const [collectionStore, setCollectionStore] = useState([...collection.getAllTasks()]);
   function handleTaskAdd(taskName) {
-    let task = TaskCollection.getInstance();
-    task.add(taskName);
-    console.log(task);
+    collection.add(taskName);
+    setCollectionStore([...collection.getAllTasks()]);
+  }
+  function checkTask(taskID) {
+    collection.update(taskID);
+  }
+  function removeTask(taskID) {
+    collection.remove(taskID);
+    setCollectionStore([...collection.getAllTasks()]);
+  }
+  function clearCompleted(){
+    let removeIDs = collection.removeCompleted();
+    collection.remove(...removeIDs);
+    setCollectionStore([...collection.getAllTasks()]);
   }
 
   return (
@@ -17,53 +33,16 @@ function App() {
       <br/><br/>
       <AddTask onSubmit={handleTaskAdd}/>
       <br/><br/> 
-      <TaskBoxStatus/>
+      <TaskBox 
+        todoList={collectionStore}
+        onCheck={checkTask}
+        onRemove={removeTask}
+      />
+      <TaskBoxStatus
+        onClearCompleted={clearCompleted}
+      />
     </div>
   )
 }
-
-class TaskModel {
-  constructor(name) {
-    this.name = name;
-    this.ID = Date.now();
-    this.status = "PENDING";
-  }
-}
-
-export class TaskCollection {
-  static instance = null;
-  constructor() {
-    this.store = [];
-  }
-  static getInstance() {
-    if(this.instance === null) {
-      this.instance = new TaskCollection();      
-    }
-    return this.instance;
-  }
-
-  add(name) {
-    this.store.push(new TaskModel(name));
-  }
-  remove(...IDs) {
-    for(let ID of IDs) {
-      for(let i = 0; i < this.store.length; i++) {
-        if(this.store[i].ID === ID) {
-          this.store.splice(i,1);
-        }
-      }
-    }
-  }
-  getTaskModel(taskModel) {
-    return this.store[taskModel];
-  }
-  // getID() {
-  //   for(let taskModel of this.getInstance) {
-  //     return taskModel.ID;
-  //   }
-  // }
-}
-
-
 
 export default App;

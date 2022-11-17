@@ -15,32 +15,35 @@ export default class TaskCollection {
       this.store.push(new TaskModel(name));
     }
     remove(...IDs) {
-      for(let ID of IDs) {
+      for(const taskID of IDs) {
         for(let i = 0; i < this.store.length; i++) {
-          if(this.store[i].ID === ID) {
+          if(this.store[i].ID === taskID) {
             this.store.splice(i,1);
           }
         }
       }
+      
     }
-    getTaskModel(taskModel) {
-      return this.store[taskModel];
+    removeCompleted(){
+      let removeIDs = [];
+      for(const taskModel of this.store) {
+        if(taskModel.isComplete === true) {
+          removeIDs.push(taskModel.ID);
+        }
+      }
+      return removeIDs;
     }
+    update(taskID) {
+      for(const taskModel of this.store) {
+        if(taskModel.ID === taskID) {
+          taskModel.isComplete=!taskModel.isComplete;
+        }
+      }
+    }
+
     getAllTasks() {
         return this.store
     }
-    getTaskModelByID(taskID) {
-        for(let taskModel of this.store) {
-            if(taskModel.ID === taskID) {
-                return taskModel;
-            }
-        }
-    }
-    // getID() {
-    //   for(let taskModel of this.getInstance) {
-    //     return taskModel.ID;
-    //   }
-    // }
 }
 
   
