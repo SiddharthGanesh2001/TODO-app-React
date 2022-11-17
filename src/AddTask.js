@@ -5,7 +5,7 @@ export default function AddTask({ onSubmit }) {
   function handleChange(event) {
     setTaskName(event.target.value);
   }
-  function handleEnter(event) {
+  function addHandler(event) {
     if(event.code === 'Enter') {
       onSubmit(taskName);
       setTaskName("");
@@ -14,7 +14,7 @@ export default function AddTask({ onSubmit }) {
 
   return(
     <div id="addTask">    
-        <input type="text" name="addTask" placeholder="Add a task" id="addTaskBox" autoComplete="off" value={taskName} onChange={handleChange} onKeyDown={handleEnter}/>
+        <input type="text" name="addTask" placeholder="Add a task" id="addTaskBox" autoComplete="off" value={taskName} onChange={handleChange} onKeyDown={addHandler}/>
         <br/><br/>
     </div>
   )
