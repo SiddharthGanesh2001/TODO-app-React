@@ -21,7 +21,7 @@ function App() {
     collection.remove(taskID);
     setCollectionStore([...collection.getAllTasks()]);
   }
-  function clearCompleted(){
+  function clearCompleted() {
     let removeIDs = collection.removeCompleted();
     collection.remove(...removeIDs);
     setCollectionStore([...collection.getAllTasks()]);
